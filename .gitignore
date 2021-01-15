@@ -3,6 +3,5 @@
 venv
 *.csv
 *.xlsx
-db.json
 chromedriver
 *.pyc

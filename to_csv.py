@@ -21,16 +21,22 @@ def cities_to_csv():
     csv_writer = csv.writer(f)
     stores_table = db.table('stores_raw')
     stores = stores_table.all()
+    ids = set()
 
     write_headers = True
     for store in stores:
+        store_id = store.get('storeNumber')
+        if store_id in ids:
+            continue
+        ids.add(store_id)
         address = f"{store['store']['address'].get('street')}, {store['store']['address'].get('city')}, {store['store']['address'].get('state')}, {store['store']['address'].get('zip')}"
         pharmacyOpenTime = store['store'].get('pharmacyOpenTime')
         pharmacyCloseTime = store['store'].get('pharmacyCloseTime')
         phoneNumber = f"{store['store']['phone']['areaCode']}-{store['store']['phone']['number']}"
-        data = dict(id=store.get('storeNumber'), latitude=store.get('latitude'),
+        county = store['store']['address'].get('county')
+        data = dict(id=store_id, latitude=store.get('latitude'),
                     longitude=store.get('longitude'), mapUrl=store.get('mapUrl'), phoneNumber=phoneNumber,
-                    address=address, pharmacyOpenTime=pharmacyOpenTime, pharmacyCloseTime=pharmacyCloseTime,
+                    address=address, county=county, pharmacyOpenTime=pharmacyOpenTime, pharmacyCloseTime=pharmacyCloseTime,
                     )
 
         if write_headers:
