@@ -1,2 +1,8 @@
 
 .DS_Store
+venv
+*.csv
+*.xlsx
+db.json
+chromedriver
+*.pyc

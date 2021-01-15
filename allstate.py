@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup as bs
-import requests
 from selenium import webdriver
-import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -10,7 +8,7 @@ from selenium.common.exceptions import TimeoutException
 
 
 def get_statelinks():
-	driver=webdriver.Chrome()
+	driver=webdriver.Chrome(executable_path='./chromedriver')
 
 	driver.get("https://www.walgreens.com/storelistings/storesbystate.jsp?requestType=locator")
 
@@ -42,4 +40,6 @@ def get_statelinks():
 
 	        # print("http:/www.walgreens.com/" + a['href'])
 	return all_state_links
-get_statelinks()
+
+if __name__ == "__main__":
+	print(get_statelinks())
